@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MinecraftAI — signing in</title>
+<style>
+  body { margin:0; background:#11161d; color:#e8edf3; font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;
+         display:grid; place-items:center; min-height:100vh; text-align:center; padding:1.5rem; }
+  .box { max-width:30rem; }
+  a { color:#7dc4ff; }
+  code { background:#1a2430; padding:.15rem .4rem; border-radius:6px; }
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>Signing in…</h1>
+  <p id="msg">Handing the sign-in back to the studio on this computer.</p>
+  <p id="manual" hidden>If nothing happens, the studio isn't running. Start it with
+  <code>python dashboard.py</code> and open this link again.</p>
+</div>
+<script>
+  // TikTok sends the code here; the studio itself runs on this machine, so pass it straight back to it.
+  const q = location.search;
+  const target = "http://127.0.0.1:8798/callback" + q;
+  if (q.includes("code=")) {
+    location.replace(target);
+    setTimeout(() => { document.getElementById("manual").hidden = false; }, 2500);
+  } else {
+    document.getElementById("msg").textContent = "No sign-in code in this link.";
+  }
+</script>
+</body>
+</html>
